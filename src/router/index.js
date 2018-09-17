@@ -8,6 +8,8 @@ import company from '@/components/company'
 import account from '@/components/account'
 import visitor from '@/components/visitor'
 import user from '@/components/user'
+import articles from '@/components/articles'
+import read from '@/components/read'
 
 
 
@@ -61,9 +63,20 @@ export default new Router({
          path: '/user',
          name: 'user',
          component: user,
-         meta:{title:'人脉分析',keepAlive:true}
+         meta:{title:'人脉分析',keepAlive:false}
       },
-
+      {
+         path: '/articles',
+         name: 'articles',
+         component: articles,
+         meta:{title:'我的文章',keepAlive:false}
+      },
+      {
+         path: '/read',
+         name: 'read',
+         component: read,
+         meta:{title:'阅读',keepAlive:false}
+      },
 
 
 

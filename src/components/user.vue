@@ -75,6 +75,19 @@
             <p class="explain">根据事业爆文人脉分析</p>
             <p class="title">您可以通过以下好友或群友找到<span>TA!</span></p>
          </div>
+
+         <div class="analyzeImg">
+            <div class="oneself"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+            <div class="person img1"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+            <div class="person img2"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+            <div class="person img3"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+            <div class="person img4"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+            <div class="person img5"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+            <div class="person img6"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+            <div class="person img7"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+            <div class="person img8"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+            <div class="person img9"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+         </div>
       </div>
 
 

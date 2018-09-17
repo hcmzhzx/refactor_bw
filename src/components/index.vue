@@ -17,7 +17,7 @@
          </tab>
       </div>
       <!--:class="[userInfo.is_company ? essayList.length:'none']"-->
-      <scroller class="flexitemv mainbox tab-container" lock-x use-pullup :pullup-config="pullupConfig" @on-pullup-loading="load" v-model="Value" :class="[essayList.length ? '':'none']">
+      <scroller class="flexitemv mainbox tab-container" ref="myScroller" lock-x use-pullup :pullup-config="pullupConfig" @on-pullup-loading="load" v-model="Value" :class="[essayList.length ? '':'none']">
          <!-- v-if="userInfo.is_company"-->
          <div class="flexitemv content box2">
             <div class="flexv item" v-if="essayList.length">
@@ -85,9 +85,10 @@
 
             show:false,
             text:'加载中...',
+
             page:1,
             Value:{
-               pullupStatus:'default'
+               pullupStatus:'disabled'  //default, enabled, disabled
             },
             pullupConfig: {
                content: '上拉加载更多',
@@ -127,11 +128,13 @@
 
          // 分页
          load(){
-            let page = this.page+=1;
-            this.$http.get(`articles?cid=${this.cid}&page=${page}`).then(res => {
-               this.essayList.push(...res.data.data);
-               this.Value.pullupStatus = 'default'
-            });
+            if(this.essayList.length > 9){
+               this.Value.pullupStatus = 'enabled'
+               let page = this.page+=1;
+               this.$http.get(`articles?cid=${this.cid}&page=${page}`).then(res => {
+                  this.essayList.push(...res.data.data);
+               });
+            }
          }
       }
    }
