@@ -24,7 +24,7 @@ const actions = { //应用 mutation 使用(dispath)
       return axios.get('categories').then(res=>{
          commit('nav_state',{navList:res.data});
          return res.data
-      }).catch(err=>err);
+      })
    }
 };
 

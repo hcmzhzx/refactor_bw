@@ -4,7 +4,6 @@ import router from './router'
 import axios from 'axios'
 import store from './store'
 import {API_URL} from '@/assets/js/api'
-
 import '@/assets/css/index.css' // 引入css文件
 
 Vue.config.productionTip = false;
@@ -17,12 +16,12 @@ router.beforeEach((to, from, next) => {
    }
 
    // 请求token
-   if(!localStorage.getItem('access_token')){
-      axios.get(`${API_URL}/user/login`).then(res=>{
-         localStorage.setItem('access_token',`Bearer ${res.meta.access_token}`)
+   if (localStorage.getItem('access_token') == 'undefined' || localStorage.getItem('access_token') == null || localStorage.getItem('access_token') == '') {
+      axios.get(`${API_URL}/user/login`).then(res => {
+         localStorage.setItem('access_token', `Bearer ${res.meta.access_token}`)
          next()
       })
-   }else {
+   } else {
       next()
    }
 })

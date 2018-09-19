@@ -10,6 +10,7 @@ import visitor from '@/components/visitor'
 import user from '@/components/user'
 import articles from '@/components/articles'
 import read from '@/components/read'
+import visitorArticle from '@/components/visitor_article'
 
 
 
@@ -21,7 +22,7 @@ export default new Router({
          path: '/',
          name: 'index',
          component: index,
-         meta:{title:'首页',keepAlive:true}
+         meta:{title:'首页',keepAlive:false}
       },
       {
          path: '/search',
@@ -77,6 +78,21 @@ export default new Router({
          component: read,
          meta:{title:'阅读',keepAlive:false}
       },
+      {
+         path: '/visitor/article',
+         name: 'visitor_article',
+         component: visitorArticle,
+         meta:{title:'文章访客',keepAlive:false}
+      },
+
+
+
+
+
+
+
+
+
 
 
 

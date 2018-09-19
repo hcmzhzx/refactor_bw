@@ -21,10 +21,7 @@ axios.interceptors.response.use(res=>{
    }
    return res.data;
 },err=>{
-   const errData = err.response;
-   //console.log(err,errDate);
-
-   return Promise.reject({ code: errData})
+   return Promise.reject(err)
 })
 
 export default axios;

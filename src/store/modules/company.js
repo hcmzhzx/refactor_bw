@@ -20,7 +20,7 @@ const actions = { //应用 mutation 使用(dispath)
       return axios.get('companies').then(res=>{
          commit('company_state',res.data);
          return res.data
-      }).catch(err=>err);
+      })
    }
 };
 

@@ -21,7 +21,7 @@
             </tab-item>
          </tab>
 
-         <div class="flexv bg_white lists">
+         <div class="flexv bg_white lists" v-if="readList.length">
             <a href="javascript:;" class="between bg_white list">
                <div class="img"><img src="https://img.zx85.net/edit/image/jpeg/5b9c760ce6bdd.jpeg" class="fitimg"></div>
                <div class="flexitemv cont">
@@ -45,6 +45,10 @@
                <span class="flex">展开剩余<i>1</i>条记录</span><i class="flex center bw bw-down"></i>
             </a>
          </div>
+         <div class="flexitemv center undata" v-else>
+            <div class="icon"><img src="../../static/image/default-icon.png" class="fitimg"></div>
+            <p class="flex center text">暂无相关阅读信息</p>
+         </div>
       </div>
    </div>
 </template>
@@ -57,5 +61,10 @@
       components: {
          Tab, TabItem
       },
+      data(){
+         return{
+            readList:['1']
+         }
+      }
    }
 </script>

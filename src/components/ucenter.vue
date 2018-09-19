@@ -1,6 +1,6 @@
 <template>
    <div id="ucenter" class="flexv wrap">
-      <div class="flexitemv mainbox">
+      <div class="flexitemv mainbox" v-if="Object.keys(userInfo).length">
          <!--头部用户信息-->
          <div class="flexv top bg_white serve">
             <div class="flexv head">
@@ -12,7 +12,7 @@
                   </div>
                   <div class="flexv center user">
                      <div class="userImg"><img :src="userInfo.avatar" class="radimg"></div>
-                     <p class="flex center name">小胡</p>
+                     <p class="flex center name">{{userInfo.name}}</p>
                   </div>
                </div>
                <div class="between member">
@@ -77,28 +77,45 @@
             </a>
          </div>
       </div>
+      <!--load 缺省页-->
+      <default :config="config"></default>
       <myfooter class="footer"></myfooter>
    </div>
 </template>
 
 <script>
    import myfooter from './module/my-footer'
+   import Default from './module/default'
 
    export default {
       name: 'ucenter',
       components:{
-         myfooter
+         myfooter, Default
       },
       data(){
          return{
             userInfo:{},  // 用户信息
+
+            config: {
+               code: 0, // 0 loading, -1 错误信息
+               icon: '',
+               text: ''
+            }
          }
       },
       created(){
          // 获取用户信息
          this.$store.dispatch('user_listing').then(user=>{
             this.userInfo = user;
-         });
+         }).catch(err=>{
+            this.config = {
+               code: -1,
+               icon: '../../static/image/server_err.png',
+               text: '服务器崩溃啦',
+               routeName: 'index',
+               routeText: '返回首页'
+            }
+         })
       },
       methods:{
 

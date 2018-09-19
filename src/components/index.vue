@@ -16,11 +16,10 @@
             </tab-item>
          </tab>
       </div>
-      <!--:class="[userInfo.is_company ? essayList.length:'none']"-->
-      <scroller class="flexitemv mainbox tab-container" ref="myScroller" lock-x use-pullup :pullup-config="pullupConfig" @on-pullup-loading="load" v-model="Value" :class="[essayList.length ? '':'none']">
-         <!-- v-if="userInfo.is_company"-->
+
+      <mescroll v-show="current" class="flexitemv mainbox tab-container" ref="myScroller" :up="mescrollUp" @init="mescrollInit" :class="[essayList.length ? '':'none']">
          <div class="flexitemv content box2">
-            <div class="flexv item" v-if="essayList.length">
+            <div class="flexv item">
                <a href="javascript:;" class="flex bg_white list" v-for="item in essayList" :key="item.id">
                   <div class="flexv lists" v-if="item.covers">
                      <div class="flexitemv cont">
@@ -48,32 +47,23 @@
                   </div>
                </a>
             </div>
-            <div class="flexitemv center undata" v-else>
-               <div class="icon"><img src="../../static/image/article-icon.png" class="fitimg"></div>
-               <p class="text">暂无相关分类文章~</p>
-               <a href="javascript:;" class="flex center company">提交好文章</a>
-            </div>
          </div>
-         <!--没有选公司
-         <div class="flexitemv center undata" v-else>
-            <div class="icon"><img src="../assets/image/company-icon.png" class="fitimg"></div>
-            <p class="text">您尚未选择公司,请选择后查看</p>
-            <a href="javascript:;" @click="$router.push({name:'company'})" class="flex center company">选择所属公司</a>
-         </div>-->
-      </scroller>
+      </mescroll>
+      <default :config="config"></default>
       <myfooter></myfooter>
-      <loading v-model="show" :text="text"></loading>
    </div>
 </template>
 
 <script>
-   import myfooter from './module/my-footer'
-   import {Tab, TabItem, Loading, Scroller } from 'vux'
+   import Myfooter from './module/my-footer'
+   import Default from './module/default'
+   import Mescroll from 'mescroll.js/mescroll'
+   import {Tab, TabItem, Loading, Toast} from 'vux'
 
    export default {
       name: 'index',
       components: {
-         myfooter, Tab, TabItem, Loading, Scroller
+         Myfooter, Tab, TabItem, Default, Mescroll
       },
       data () {
          return {
@@ -81,60 +71,134 @@
             userInfo: {},  //用户信息
             navList: {},   //导航栏
             essayList: [],  //文章列表
-            cid:1,
+            cid: 1,
 
-            show:false,
-            text:'加载中...',
-
-            page:1,
-            Value:{
-               pullupStatus:'disabled'  //default, enabled, disabled
+            current: false,
+            config: {
+               code: 0, // 0 loading, -1 错误信息
+               text: '',
+               routeName: '',
+               routeText: ''
             },
-            pullupConfig: {
-               content: '上拉加载更多',
-               downContent: '松开进行加载',
-               upContent: '上拉加载更多',
-               loadingContent: '加载中...'
+
+            mescroll: null,
+            mescrollUp: {
+               callback: this.upCallback,
+               page: {
+                  num: 0,
+                  size: 10,
+               },
+               moMoreSize: 6,
+               toTop: {
+                  src: '../../static/image/totop.png',
+                  offset: 1800,
+               }
             }
          }
       },
       created(){
-         this.show = true;
          // 获取用户信息
          this.$store.dispatch('user_listing').then(user => {
             this.userInfo = user;
-         });
+
+            if(user.is_company!=1){
+               this.config = {
+                  code: -1,
+                  icon: '../../static/image/default-icon.png',
+                  text: '您尚未选择公司,请选择后查看',
+                  routeName: 'company',
+                  routeText: '选择所属公司'
+               }
+            }
+         }).catch(err => {
+            this.config = {
+               code: -1,
+               icon: '../../static/image/server_err.png',
+               text: '服务器崩溃啦',
+               routeName: 'index',
+               routeText: '刷新一下试试'
+            }
+         })
          // 获取导航栏
          this.$store.dispatch('nav_listing').then(nav => {
             this.navList = nav;
-         });
-         // 默认获取第一栏文章列表
-         this.$http.get('articles?cid=1').then(res => {
-            this.essayList = res.data.data;
-            this.show = false;
-         });
+         }).catch(err => {
+            this.config = {
+               code: -1,
+               icon: '../../static/image/server_err.png',
+               text: '服务器崩溃啦',
+               routeName: 'index',
+               routeText: '刷新一下试试'
+            }
+         })
       },
+      /*beforRouteEnter(to, from, next){
+         next(vm => {
+            vm.$refs.myScroller.beforRouteEnter()
+         })
+      },
+      beforRouteLeave(to, from, next){
+         next(vm => {
+            vm.$refs.myScroller.beforRouteLeave()
+            next()
+         })
+      },*/
       methods: {
          // 导航栏切换内容
          nav(id){
-            this.show = true;
+            this.config.code = 0;
             this.$http.get(`articles?cid=${id}`).then(res => {
+               this.cid = id;
                this.essayList = res.data.data;
 
-               this.cid = id;
-               this.show = false;
-            });
+               this.config.code = 2
+            }).catch(err => {
+               this.config = {
+                  code: -1,
+                  icon: '../../static/image/server_err.png',
+                  text: '服务器崩溃啦',
+                  routeName: 'index',
+                  routeText: '刷新一下试试'
+               }
+            })
          },
-
-         // 分页
-         load(){
-            if(this.essayList.length > 9){
-               this.Value.pullupStatus = 'enabled'
-               let page = this.page+=1;
-               this.$http.get(`articles?cid=${this.cid}&page=${page}`).then(res => {
+         mescrollInit (mescroll) {
+            this.mescroll = mescroll
+         },
+         //上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
+         upCallback(page, mescroll){
+            console.log((this.userInfo.is_company != null));
+            this.$http.get(`articles?cid=${this.cid}&page=${page.num}`).then(res => {
+               if (page.num == 1) {
+                  this.essayList = []
+               }
+               if (res.data.data.length==0) {
+                  this.config = {
+                     code: -1,
+                     icon: '../../static/image/default-icon.png',
+                     text: '暂无相关分类文章~',
+                     routeName: '/',
+                     routeText: '提交好文章'
+                  }
+               } else {
                   this.essayList.push(...res.data.data);
-               });
-            }
+                  this.current = true;
+
+                  this.config.code = 2;
+                  this.$nextTick(() => {
+                     mescroll.endSuccess(res.data.data.length);
+                  })
+               }
+            }).catch((err) => {
+               mescroll.endErr()
+               this.config = {
+                  code: -1,
+                  icon: '../../static/image/server_err.png',
+                  text: '服务器崩溃啦',
+                  routeName: 'index',
+                  routeText: '刷新一下试试'
+               }
+            })
          }
       }
    }

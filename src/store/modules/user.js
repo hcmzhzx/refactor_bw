@@ -28,7 +28,7 @@ const actions = { //应用 mutation 使用(dispath)
       return axios.get('user').then(res=>{
          commit('user_state',{userList:res});
          return res
-      }).catch(err=>err);
+      })
    }
 };
 

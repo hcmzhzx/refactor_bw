@@ -67,13 +67,13 @@
          </div>
       </div>
       <!--审核公司页面-->
-      <div class="flexv audit-firm" :class="{'slate':slate}">
+      <div v-show="current" class="flexv audit-firm" :class="{'slate':slate}">
          <div class="between bg_white head">
             <span class="flex center tit">提交新公司信息</span>
             <i class="flex center bw bw-close" @click="slate=false"></i>
          </div>
          <form class="flexitemv" @submit.prevent="sendForm">
-            <label class="flex bg_white">
+            <div class="flex bg_white">
                <div class="flexitem center logo list">
                   <div class="flexv center">
                      <div class="logoImg" :style="{background:`#eee url(${logoImg}) 0% 0% / cover`}">
@@ -83,7 +83,7 @@
                      <p class="flex center hint">公司LOGO(必选)</p>
                   </div>
                </div>
-            </label>
+            </div>
             <label class="flex bg_white">
                <div class="flexitem center list short">
                   <span class="flex center">公司简称</span>
@@ -103,98 +103,121 @@
             <button type="submit" class="flex center submit">提交审核</button>
          </form>
       </div>
+      <default :config="config"></default>
       <!--提示框-->
-      <toast v-model="show" :time="1000" width="12rem" :type="type">{{text}}</toast>
-      <!--Loading-->
-      <loading :show="load" :text="loadText"></loading>
+      <toast v-model="toast.show" width="12rem" :type="toast.type">{{toast.text}}</toast>
    </div>
 </template>
 
 <script>
    import {_debounce} from '../assets/js/functions'
-   import {Toast, Loading} from 'vux'
+   import Default from './module/default'
+   import {Toast} from 'vux'
    import {CheckForm} from '../assets/js/checkForm'
 
    export default {
       name: 'company',
-      components:{
-         Toast, Loading
+      components: {
+         Default, Toast
       },
       data(){
-         return{
-            point:false, // 判断焦点
-            slate:false, // 提交审核页面
-            PYarr:[],    // 首字母数组
-            brands:[],   // 公司数据
-            searchArr:[],  // 搜索数组
-            userInfo:{}, // 用户信息
-            logoImg:'../../static/image/logo-img.jpg', // logo 提示图
+         return {
+            point: false, // 判断焦点
+            slate: false, // 提交审核页面
+            PYarr: [],    // 首字母数组
+            brands: [],   // 公司数据
+            searchArr: [],  // 搜索数组
+            userInfo: {}, // 用户信息
+            logoImg: '../../static/image/logo-img.jpg', // logo 提示图
 
-            show:false,
-            type:'', // 提示类型"success,warn"
-            text:'', // 提示文字
-            load:false,
-            loadText:'',
+            current: false,
+            config: {
+               code: 0, // 0 loading, -1 错误信息
+               icon: '', // 提示图片
+               text: '',
+               routeName: '',
+               routeText: ''
+            },
+
+            toast: {
+               show: false,
+               type: '', // 提示类型"success,cancel,warn"
+               text: ''
+            }
          }
       },
       created(){
          // 请求公司数据
-         this.load = true;
-         this.loadText = '加载中...'
-         this.$store.dispatch('company_listing').then(res=>{
+         this.$store.dispatch('company_listing').then(res => {
             this.brands = res;
-            this.PYarr = [... new Set(res.map((item)=>{
-               return item.pinyin.substring(0,1).toUpperCase();
+            this.PYarr = [... new Set(res.map((item) => {
+               return item.pinyin.substring(0, 1).toUpperCase();
             }))];
-            this.load = false;
-         });
+
+            this.config.code = 2;
+            this.current = true;
+         }).catch(err => {
+            this.config = {
+               code: -1,
+               icon: '../../static/image/server_err.png',
+               text: '服务器崩溃啦',
+               routeName: 'index',
+               routeText: '返回首页'
+            }
+         })
 
          // 获取用户信息
-         this.$store.dispatch('user_listing').then(user=>{
+         this.$store.dispatch('user_listing').then(user => {
             this.userInfo = user;
          });
       },
-      methods:{
+      methods: {
          // 实时搜索
          search: _debounce(function () {
             let val = this.$refs.find.value.trim();
-            if(val){
-               this.searchArr = this.brands.filter((item)=>{
+            if (val) {
+               this.searchArr = this.brands.filter((item) => {
                   return item.name.includes(val)
                });
             } else {
                this.searchArr = []
             }
-         },500),
+         }, 500),
 
          // 确定公司
          ok(id){
-            this.$store.commit('updata_state',{company:id});
-            this.$http.patch('user',{company_id:id}).then(res=>{
+            this.$store.commit('updata_state', {company: id});
+            this.$http.patch('user', {company_id: id}).then(res => {
                this.$router.go(-1);
             })
          },
 
          // logo图
          logo(){
-            if(this.$refs.company.files[0]){
+            if (this.$refs.company.files[0]) {
                this.logoImg = window.URL.createObjectURL(this.$refs.company.files[0]);
             }
          },
          // 提交公司验证
          sendForm(e){
             new CheckForm(e, err => {
-               this.show = true;
-               this.text = err;
-               this.type = 'warn'
+               this.toast = {
+                  show: true,
+                  type: 'cancel',
+                  text: err,
+               }
             }, posts => {
                const form = new FormData();
-               form.append('logo',this.$refs.company.files[0]);  // 上传文件
-               form.append('short_name',posts.short_name);
-               form.append('name',posts.name);
-               form.append('remark',posts.remark);
-               this.$http.post('company',form).then(res=>{
-                  console.log(res);
+               form.append('logo', this.$refs.company.files[0]);  // 上传文件
+               form.append('short_name', posts.short_name);
+               form.append('name', posts.name);
+               form.append('remark', posts.remark);
+               this.$http.post('company', form).then(res => {
+                  this.toast = {
+                     show: true,
+                     type: 'success',
+                     text: '提交成功',
+                  }
                })
             })
          }

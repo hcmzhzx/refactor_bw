@@ -19,7 +19,7 @@
          <p class="not" v-else>暂无相关搜索记录</p>
       </div>
 
-      <scroller class="flexitemv mainbox tab-container" lock-x use-pullup :pullup-config="pullupConfig" @on-pullup-loading="load" v-model="Value" v-else>
+      <Mescroll class="flexitemv mainbox tab-container" ref="myScroller" :up="mescrollUp" @init="mescrollInit" v-else>
          <div class="flexitemv content box2">
             <div class="flexv item">
                <a href="javascript:;" class="flex bg_white list" v-for="item in historydata" :key="item.id" @click="log(item.id)">
@@ -50,18 +50,18 @@
                </a>
             </div>
          </div>
-      </scroller>
+      </Mescroll>
    </div>
 </template>
 
 <script>
    import {_debounce} from '../assets/js/functions'
-   import {Scroller } from 'vux'
+   import Mescroll  from 'mescroll.js/mescroll'
 
    export default {
       name: 'search',
       components: {
-         Scroller
+         Mescroll
       },
       data(){
          return {
@@ -69,15 +69,18 @@
             historydata:[],  // 历史记录数据
             searchTitle:'',  // 搜索内容
 
-            page:1,
-            Value:{
-               pullupStatus:'default'
-            },
-            pullupConfig: {
-               content: '上拉加载更多',
-               downContent: '松开进行加载',
-               upContent: '上拉加载更多',
-               loadingContent: '加载中...'
+            mescroll:null,
+            mescrollUp:{
+               callback:this.upCallback,
+               page:{
+                  num:0,
+                  size:10,
+               },
+               moMoreSize:6,
+               toTop:{
+                  src:'../../static/image/totop.png',
+                  offset:1800,
+               }
             }
          }
       },
@@ -141,12 +144,20 @@
          },
 
          // 分页
-         load(){
-            let page = this.page+=1;
-            this.$http.get(`articles?title=${this.searchTitle}&page=${page}`).then(res => {
+         mescrollInit(mescroll){
+            this.mescroll = mescroll
+         },
+         //上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
+         upCallback(page, mescroll){
+            this.$http.get(`articles?title=${this.searchTitle}&page=${page.num}`).then(res => {
+               if(page.num == 1){ this.historydata = [] }
                this.historydata.push(...res.data.data);
-               this.Value.pullupStatus = 'default'
-            });
+               this.$nextTick(() => {
+                  mescroll.endSuccess(res.data.data.length);
+               })
+            }).catch((e)=>{
+               mescroll.endErr()
+            })
          }
       }
    }
