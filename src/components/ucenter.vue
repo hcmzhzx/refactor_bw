@@ -107,6 +107,8 @@
          // 获取用户信息
          this.$store.dispatch('user_listing').then(user=>{
             this.userInfo = user;
+
+            this.config.code = 2;
          }).catch(err=>{
             this.config = {
                code: -1,

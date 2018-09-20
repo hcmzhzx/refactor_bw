@@ -21,7 +21,7 @@
          <div class="flexitemv content box2">
             <div class="flexv item">
                <a href="javascript:;" class="flex bg_white list" v-for="item in essayList" :key="item.id">
-                  <div class="flexv lists" v-if="item.covers">
+                  <div class="flexv lists" v-if="item.covers.length==3">
                      <div class="flexitemv cont">
                         <h2 class="flexitemv">{{item.title}}</h2>
                      </div>
@@ -68,7 +68,9 @@
       data () {
          return {
             selected: '0', //默认分类栏
-            userInfo: {},  //用户信息
+            userInfo: {    //用户信息
+               is_company:0
+            },
             navList: {},   //导航栏
             essayList: [],  //文章列表
             cid: 1,
@@ -91,7 +93,7 @@
                moMoreSize: 6,
                toTop: {
                   src: '../../static/image/totop.png',
-                  offset: 1800,
+                  offset:1800
                }
             }
          }
@@ -132,25 +134,14 @@
             }
          })
       },
-      /*beforRouteEnter(to, from, next){
-         next(vm => {
-            vm.$refs.myScroller.beforRouteEnter()
-         })
-      },
-      beforRouteLeave(to, from, next){
-         next(vm => {
-            vm.$refs.myScroller.beforRouteLeave()
-            next()
-         })
-      },*/
       methods: {
          // 导航栏切换内容
          nav(id){
             this.config.code = 0;
             this.$http.get(`articles?cid=${id}`).then(res => {
                this.cid = id;
-               this.essayList = res.data.data;
-
+               this.essayList = [];
+               this.mescroll.resetUpScroll();  // 刷新列表数据
                this.config.code = 2
             }).catch(err => {
                this.config = {
@@ -162,43 +153,47 @@
                }
             })
          },
+         // 初始化
          mescrollInit (mescroll) {
             this.mescroll = mescroll
          },
          //上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
          upCallback(page, mescroll){
-            console.log((this.userInfo.is_company != null));
-            this.$http.get(`articles?cid=${this.cid}&page=${page.num}`).then(res => {
-               if (page.num == 1) {
-                  this.essayList = []
-               }
-               if (res.data.data.length==0) {
+            const scroll = setInterval(()=>{  // 解决回调太快,数据还没回来
+               if(this.userInfo.is_company != 1) return;
+               clearInterval(scroll);
+               this.$http.get(`articles?cid=${this.cid}&page=${page.num}`).then(res => {
+                  if (page.num == 1) {
+                     this.essayList = []
+                  }
+                  if (res.data.length==0) {
+                     this.config = {
+                        code: -1,
+                        icon: '../../static/image/default-icon.png',
+                        text: '暂无相关分类文章~',
+                        routeName: '/',
+                        routeText: '提交好文章'
+                     }
+                  } else {
+                     this.essayList.push(...res.data);
+                     this.current = true;
+
+                     this.config.code = 2;
+                     this.$nextTick(() => {
+                        mescroll.endSuccess(res.data.length);
+                     })
+                  }
+               }).catch((err) => {
+                  mescroll.endErr()
                   this.config = {
                      code: -1,
-                     icon: '../../static/image/default-icon.png',
-                     text: '暂无相关分类文章~',
-                     routeName: '/',
-                     routeText: '提交好文章'
+                     icon: '../../static/image/server_err.png',
+                     text: '服务器崩溃啦1',
+                     routeName: 'index',
+                     routeText: '刷新一下试试'
                   }
-               } else {
-                  this.essayList.push(...res.data.data);
-                  this.current = true;
-
-                  this.config.code = 2;
-                  this.$nextTick(() => {
-                     mescroll.endSuccess(res.data.data.length);
-                  })
-               }
-            }).catch((err) => {
-               mescroll.endErr()
-               this.config = {
-                  code: -1,
-                  icon: '../../static/image/server_err.png',
-                  text: '服务器崩溃啦',
-                  routeName: 'index',
-                  routeText: '刷新一下试试'
-               }
-            })
+               })
+            },30)
          }
       }
    }
