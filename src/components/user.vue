@@ -7,8 +7,9 @@
                <span class="flexv name">{{userInfo.name}}</span>
             </div>
             <div class="between right">
-               <a :href="`tel:${analyze.user.phone}`" class="flex center bw bw-phone"></a>
-               <a href="javascript:;" class="flex center bw bw-wx"></a>
+               <a :href="`tel:${analyze.user.phone}`" class="flex center bw bw-phone" v-if="analyze.user.profession"></a>
+               <a href="javascript:;" class="flex center bw bw-phone" @click="phone" v-else></a>
+               <a href="javascript:;" class="flex center bw bw-wx" @click="wechat(analyze.user.wechat)"></a>
             </div>
          </div>
          <div class="flexv analyze">
@@ -73,16 +74,19 @@
       </div>
       <!--load 缺省页-->
       <default :config="config"></default>
+      <!--提示框-->
+      <toast v-model="toast.show" width="12rem" :type="toast.type">{{toast.text}}</toast>
    </div>
 </template>
 
 <script>
    import Default from './module/default'
+   import {Toast} from 'vux'
 
    export default {
       name: 'user',
       components: {
-         Default
+         Default,Toast
       },
       data () {
          return {
@@ -93,8 +97,15 @@
             config: {
                code: 0, // 0 loading, -1 错误信息
                icon: '',
-               text: ''
+               text: '',
+               title:'',
+               number:''
             },
+            toast:{
+               show:false,
+               type:'', // 提示类型"success,cancel,warn"
+               text:''
+            }
          }
       },
       created () {
@@ -107,7 +118,7 @@
             // 获取分析数据
             this.$http.get(`visitor/user_analysis/${this.Id}`).then(analysis => {
                if(analysis.last_article.length>0){
-                  this.config.code = 1;
+                  this.config.code = 2;
                   this.analyze = analysis
                } else {
                   this.config = {
@@ -134,9 +145,32 @@
                routeText: '返回首页'
             }
          })
-
-
-
+      },
+      methods:{
+         // 电话
+         phone(){
+            this.toast={
+               show:true,
+               type:'cancel',
+               text:'该用户尚未上传'
+            }
+         },
+         // 微信
+         wechat(num){
+            if(num){
+               this.config={
+                  code:1,
+                  title:'微信号',
+                  number:num
+               }
+            } else {
+               this.toast={
+                  show:true,
+                  type:'cancel',
+                  text:'该用户尚未上传'
+               }
+            }
+         }
       }
    }
 </script>

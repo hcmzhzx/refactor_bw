@@ -5,10 +5,7 @@
             <span class="flex center txt">全部</span>
          </tab-item>
          <tab-item @on-item-click="nav()" class="list">
-            <span class="flex center txt">微信好友</span>
-         </tab-item>
-         <tab-item @on-item-click="nav()" class="list">
-            <span class="flex center txt">微信群聊</span>
+            <span class="flex center txt">微信群/好友</span>
          </tab-item>
          <tab-item @on-item-click="nav()" class="list">
             <span class="flex center txt">朋友圈</span>
@@ -95,7 +92,6 @@
             </div>
          </div>
       </mescroll>
-      <!--缺省提示页-->
       <default :config="config"></default>
    </div>
 </template>
@@ -117,7 +113,7 @@
 
             current: false,
             config: {
-               code: 0, // 0 loading, -1 空/错误
+               code: 0, // 0 loading, -1 错误信息
                text: '',
                routeName: '',
                routeText: ''
@@ -167,21 +163,21 @@
          //上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
          upCallback(page, mescroll){
             /*this.$http.get(`articles?cid=${this.cid}&page=${page.num}`).then(res => {
-               if(page.num == 1){ this.essayList = [] }
-               this.essayList.push(...res.data.data);
-               this.$nextTick(() => {
-                  mescroll.endSuccess(res.data.data.length);
-               })
-            }).catch((e)=>{
-               mescroll.endErr()
-               this.config = {
-                  code: -1,
-                  icon: '../../static/image/server_err.png',
-                  text: '服务器崩溃啦',
-                  routeName: 'index',
-                  routeText: '返回首页'
-               }
-            })*/
+             if(page.num == 1){ this.essayList = [] }
+             this.essayList.push(...res.data.data);
+             this.$nextTick(() => {
+             mescroll.endSuccess(res.data.data.length);
+             })
+             }).catch((e)=>{
+             mescroll.endErr()
+             this.config = {
+             code: -1,
+             icon: '../../static/image/server_err.png',
+             text: '服务器崩溃啦',
+             routeName: 'index',
+             routeText: '返回首页'
+             }
+             })*/
          }
       }
    }

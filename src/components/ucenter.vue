@@ -43,7 +43,7 @@
                <span class="flex center left"><i class="flex center bw bw-visitor" style="color:#ff4d4c"></i>访客记录</span>
                <span class="flex center right">谁查看了我的文章<i class="flex center bw bw-right"></i></span>
             </a>
-            <a href="javascript:;" class="between list">
+            <a href="javascript:;" class="between list" @click="$router.push({name:'share'})">
                <span class="flex center left"><i class="flex center bw bw-share" style="color:#fab928"></i>分享记录</span>
                <span class="flex center right">看看有谁帮我分享了文章<i class="flex center bw bw-right"></i></span>
             </a>
@@ -67,7 +67,7 @@
                <span class="flex center left"><i class="flex center bw bw-article" style="color:#00b8fd"></i>我的文章</span>
                <span class="flex center right">我创建发布的文章<i class="flex center bw bw-right"></i></span>
             </a>
-            <a href="javascript:;" class="between list">
+            <a href="javascript:;" class="between list" @click="$router.push({name:'reward'})">
                <span class="flex center left"><i class="flex center bw bw-push" style="color:#6975ee"></i>推广中心</span>
                <span class="flex center right">推广用户赚取的佣金<i class="flex center bw bw-right"></i></span>
             </a>

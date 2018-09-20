@@ -11,6 +11,8 @@ import user from '@/components/user'
 import articles from '@/components/articles'
 import read from '@/components/read'
 import visitorArticle from '@/components/visitor_article'
+import share from '@/components/share'
+import reward from '@/components/reward'
 
 
 
@@ -22,7 +24,7 @@ export default new Router({
          path: '/',
          name: 'index',
          component: index,
-         meta:{title:'首页',keepAlive:false}
+         meta:{title:'首页',keepAlive:true}
       },
       {
          path: '/search',
@@ -84,8 +86,18 @@ export default new Router({
          component: visitorArticle,
          meta:{title:'文章访客',keepAlive:false}
       },
-
-
+      {
+         path: '/share',
+         name: 'share',
+         component: share,
+         meta:{title:'分享记录',keepAlive:false}
+      },
+      {
+         path: '/reward',
+         name: 'reward',
+         component: reward,
+         meta:{title:'推广佣金',keepAlive:false}
+      },
 
 
 

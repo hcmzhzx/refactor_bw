@@ -39,14 +39,8 @@ input[type=file]{position:absolute;top:0;left:0;bottom:0;right:0;opacity:0;width
 .mainbox{position:relative;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 element::-webkit-scrollbar,.mainbox::-webkit-scrollbar{display:none;} /*清除滚动条*/
 /************************ 动画 **************************/
-@keyframes progresses{0%{transform: rotate(0deg);}100%{transform: rotate(360deg);}}
-@-webkit-keyframes progresses{0%{-webkit-transform: rotate(0deg);}100%{-webkit-transform: rotate(360deg);}}
-@keyframes loading{0% {-webkit-transform: rotate(0deg); transform: rotate(0deg);} 100% {-webkit-transform: rotate(360deg); transform: rotate(360deg);}}
-@-webkit-keyframes loading{0% {-webkit-transform: rotate(0deg);transform: rotate(0deg);} 100% {-webkit-transform: rotate(360deg);transform: rotate(360deg);}}
-@keyframes twinkling{0%{opacity: 0; visibility: hidden;}100%{opacity: 1; visibility: visible;}}
-@-webkit-keyframes twinkling{0%{opacity: 0; visibility: hidden;}100%{opacity: 1; visibility: visible;}}
-@keyframes popup {0%{-webkit-transform:scale(0);opacity:0.2}75%{-webkit-transform:scale(1);opacity:1}100%{-webkit-transform:scale(1.1);opacity:0}}
-@-webkit-keyframes popup {0%{-webkit-transform:scale(0);opacity:0.2}75%{-webkit-transform:scale(1);opacity:1}100%{-webkit-transform:scale(1.1);opacity:0}}
+@keyframes zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3);}50%{opacity:1}}
+@-webkit-keyframes zoomIn{0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3);}50%{opacity:1}}
 /************************ 更多 **************************/
 #more{height:5rem;}
 #more i{width:1.6rem;height:1.6rem;display:inline-block;border-width:1px;border-style:solid;border-color:#ccc #ccc #222 #222;border-radius:50%;-webkit-animation:loading 1s infinite linear;animation:loading 1s infinite linear;vertical-align:-0.3rem;}
@@ -60,7 +54,10 @@ element::-webkit-scrollbar,.mainbox::-webkit-scrollbar{display:none;} /*清除�
 html,body{background:#f2f2f2;}
 .bw{-webkit-text-stroke-width:0;}
 .bg_white{background:#fff;}
-.weui-toast{width:11rem !important;margin:0 !important;top:50% !important;transform:translate(-50%,-50%);}
+.line{width:1px;background:#eee;}
+.vux-tab-container,.vux-tab{height:inherit !important;}
+.vux-tab .vux-tab-item{display:-webkit-box !important;line-height:inherit !important;font-size:inherit !important}
+.weui-toast{width:11rem !important;margin:0 !important;/*top:50% !important;transform:translate(-50%,-50%);*/}
 .xs-plugin-pullup-container{line-height:40px;font-size:1.6rem;}
 .mescroll-totop{bottom:100px;}
 
@@ -69,6 +66,18 @@ html,body{background:#f2f2f2;}
 .undata .icon{width:14rem;}
 .undata p.text{margin:1rem 0;}
 .undata a.btn{padding:.8rem 3rem;border-radius:2rem;background:#23a8e6;color:#fff;}
+
+#alert{position:fixed;top:0;left:0;width:100%;bottom:0;overflow:hidden;background:rgba(0,0,0,.5);font-size:1.6rem;z-index:500;transform:scale(0)}
+#alert.show{transform:scale(1)}
+#alert .mask{width:100%;height:100%}
+#alert.show .content{animation: zoomIn .4s ease;}
+#alert .content{width:70%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#333;border-radius:6px;}
+#alert .content .title{padding:1rem 0;}
+#alert .content .text{margin:1rem 0;padding:1rem 0;color:#999;}
+#alert .content .btnbox{border-top:1px solid #eee;}
+#alert .content .btnbox a.btn{height:4rem;border-left:1px solid #eee;}
+
+.clipboard{position:absolute;top:0;left:-1000rem;}
 /*********************** 我的页脚 *************************/
 #myFooter{position:relative;box-shadow:0 -5px 10px 0 #eee;}
 #myFooter a.tab{font-size:1.4rem;color:#999;}
@@ -130,7 +139,6 @@ html,body{background:#f2f2f2;}
 .tab-container .lists .base span{margin-right:1rem;}
 .tab-container .lists .base span i{font-size:1.6rem;}
 
-#index .vux-tab-container,#index .vux-tab{height:inherit;}
 #index .none .xs-container{display:-webkit-box;-webkit-box-flex:1;flex:1;}
 /************************* 搜索 ****************************/
 #search .search{margin:1rem;height:4rem;border-radius:.4rem;background:#ebebeb;font-size:1.6rem;}
@@ -148,7 +156,7 @@ html,body{background:#f2f2f2;}
 #ucenter .top .head{background:url("../../../static/image/ucenter.png")no-repeat center;background-size:cover;padding:2rem 1rem;border-radius:1rem;overflow:hidden;color:#fff;}
 #ucenter .top .head .userInfo{margin-right:2rem;}
 #ucenter .top .head .userInfo .vipTime .time{margin-top:1rem;font-size:2.2rem;}
-#ucenter .top .head .userInfo .user .userImg{width:6rem;height:6rem;border-radius:50%;margin-bottom:1rem;}
+#ucenter .top .head .userInfo .user .userImg{width:6rem;height:6rem;border-radius:50%;margin-bottom:1rem;background:#eee;}
 #ucenter .top .head .member{margin-top:1rem;}
 #ucenter .top .head .member a.renew{margin:0;padding:.2rem 1.2rem;border-radius:.6rem;color:#3fa0cc;}
 #ucenter .top .nav{width:100%;margin-bottom:1rem;}
@@ -206,7 +214,7 @@ html,body{background:#f2f2f2;}
 #user .analyze .top .number{font-size:3.4rem;}
 #user .analyze .top .text{font-size:1.6rem;}
 #user .analyze .centre>div{height:6rem;}
-#user .analyze .centre .line{width:1px;height:4rem;background:#80caf3;}
+#user .analyze .centre .line{height:4rem;background:#80caf3;}
 #user .analyze .centre>div .list{width:13rem;font-size:1.5rem;}
 #user .analyze .bottom .tit{padding-bottom:1rem;}
 #user .analyze .bottom .tit .lately{font-size:1.5rem;}
@@ -243,7 +251,7 @@ html,body{background:#f2f2f2;}
 #user .analyzeImg .img9:before{top:50%;left:150%;height:170%;transform:rotate(130deg) translateZ(0);}
 /*********************** 我的文章 *************************/
 #articles,#articles .nav .list{font-size:1.8rem;}
-#articles i.line{width:1px;height:2rem;background:#eee;}
+#articles i.line{height:2rem;}
 #articles .tab-container .lists{margin-top:1rem;}
 #articles .tab-container .visitor{padding:1rem;border-top:1px solid #eee;border-bottom:1px solid #eee;font-size:1.5rem;}
 #articles .tab-container .visitor .user .img{width:4rem;height:4rem;position:relative;border:2px solid #fff;border-radius:50%;overflow:hidden;}
@@ -265,7 +273,7 @@ html,body{background:#f2f2f2;}
 #read .tab-container .nav .list{font-size:1.8rem;}
 #read .tab-container .lists .list{border-bottom:none}
 #read .tab-container .lists .record_time{margin:0 1rem;border-top:1px solid #eee;border-bottom:1px solid #eee;color:#999;align-items:right;}
-#read .tab-container .lists .record_time i.line{width:1px;height:3rem;background:#eee;}
+#read .tab-container .lists .record_time i.line{height:3rem;}
 #read .tab-container .lists .record_time .time_lists{padding-right:1rem;}
 #read .tab-container .lists .record_time .time_lists .list{padding:.8rem 0;border-bottom:1px solid #eee;font-size:1.6rem;}
 #read .tab-container .lists .record_time .time_lists .list:last-child{border-bottom:none;}
@@ -283,7 +291,7 @@ html,body{background:#f2f2f2;}
 #visitor_article .content .list .friend .text{font-size:1.4rem;color:#bbb;}
 #visitor_article .content .list .friend a.btn{padding:.4rem 1rem;border:1px solid #37a7f5;border-radius:2rem;font-size:1.5rem;color:#37a7f5;}
 #visitor_article .content .list .record_time{margin:0 1rem;border-top:1px solid #eee;border-bottom:1px solid #eee;color:#999;align-items:right;}
-#visitor_article .content .list .record_time i.line{width:1px;height:3rem;background:#eee;}
+#visitor_article .content .list .record_time i.line{height:3rem;}
 #visitor_article .content .list .record_time .time_lists{padding-right:1rem;}
 #visitor_article .content .list .record_time .time_lists .time_list{padding:.8rem 0;border-bottom:1px solid #eee;font-size:1.6rem;}
 #visitor_article .content .list .record_time .time_lists .time_list:last-child{border-bottom:none;}
@@ -291,20 +299,23 @@ html,body{background:#f2f2f2;}
 #visitor_article .content .list .record_time .total .time{font-size:2rem;color:#37a7f5;}
 #visitor_article .content .list .record_time .total .date{font-size:1.6rem;}
 #visitor_article .content .list .unfold{padding:1rem 0;font-size:1.6rem;}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*********************** 推广佣金 *************************/
+#reward .head .today{padding:2rem;background:linear-gradient(to bottom right, #5bc9fb, #28a7e1);color:#fff;}
+#reward .head .today .twinkle{font-size:1.6rem;}
+#reward .head .today h2.number{font-size:5rem;}
+#reward .head .today .txt{font-size:1.6rem;}
+#reward .head .past{padding:.6rem 0;font-size:1.6rem;}
+#reward .head .past .num{font-size:2rem;}
+#reward .head .past i.line{height:3rem}
+#reward .nav{margin-top:1rem;padding:0;height:4.8rem;font-size:1.5rem;}
+#reward .nav .list .num{font-size:1.8rem;}
+#reward .tab-container .item{position:relative;padding:1rem 2rem;border-bottom:1px solid #eee;}
+#reward .tab-container .item:last-child{border-bottom:none;}
+#reward .tab-container .item .userImg{width:4rem;height:4rem;border-radius:50%;background:#eee;}
+#reward .tab-container .item .info{margin-left:1rem;}
+#reward .tab-container .item .info p.name{max-width:18rem;overflow:hidden;-webkit-line-clamp:1;font-size:1.8rem;}
+#reward .tab-container .item .info span{font-size:1.4rem;color:#bbb;}
+#reward .tab-container .item .money{font-size:2.4rem;color:#d40418;}
+#reward .tab-container .item.second:before{content:'2';width:2rem;height:2rem;text-align:center;line-height:2rem;position:absolute;top:0;left:0;background:#fc0806;font-size:1.4rem;color:#fff;}
 
 

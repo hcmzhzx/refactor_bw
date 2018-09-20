@@ -18,36 +18,32 @@
       </div>
 
       <mescroll v-show="current" class="flexitemv mainbox tab-container" ref="myScroller" :up="mescrollUp" @init="mescrollInit" :class="[essayList.length ? '':'none']">
-         <div class="flexitemv content box2">
-            <div class="flexv item">
-               <a href="javascript:;" class="flex bg_white list" v-for="item in essayList" :key="item.id">
-                  <div class="flexv lists" v-if="item.covers.length==3">
-                     <div class="flexitemv cont">
-                        <h2 class="flexitemv">{{item.title}}</h2>
-                     </div>
-                     <div class="aroundh imgbox">
-                        <div class="img" v-for="val in item.covers"><img class="fitimg" :src="val"></div>
-                     </div>
-                     <div class="flex base">
-                        <span class="flex center"><i class="flex center bw bw-check"></i>{{item.view}}</span>
-                        <span class="flex center"><i class="flex center bw bw-time"></i>{{item.created_at}}</span>
-                     </div>
-                  </div>
-                  <div class="between lists" v-else>
-                     <div class="img">
-                        <img class="fitimg" :src="item.cover">
-                     </div>
-                     <div class="flexitemv cont">
-                        <h2 class="flexitemv">{{item.title}}</h2>
-                        <div class="flex base">
-                           <span class="flex center"><i class="flex center bw bw-check"></i>{{item.view}}</span>
-                           <span class="flex center"><i class="flex center bw bw-time"></i>{{item.created_at}}</span>
-                        </div>
-                     </div>
-                  </div>
-               </a>
+         <a href="javascript:;" class="flex bg_white list" v-for="item in essayList" :key="item.id">
+            <div class="flexv lists" v-if="item.covers.length==3">
+               <div class="flexitemv cont">
+                  <h2 class="flexitemv">{{item.title}}</h2>
+               </div>
+               <div class="aroundh imgbox">
+                  <div class="img" v-for="val in item.covers"><img class="fitimg" :src="val"></div>
+               </div>
+               <div class="flex base">
+                  <span class="flex center"><i class="flex center bw bw-check"></i>{{item.view}}</span>
+                  <span class="flex center"><i class="flex center bw bw-time"></i>{{item.created_at}}</span>
+               </div>
             </div>
-         </div>
+            <div class="between lists" v-else>
+               <div class="img">
+                  <img class="fitimg" :src="item.cover">
+               </div>
+               <div class="flexitemv cont">
+                  <h2 class="flexitemv">{{item.title}}</h2>
+                  <div class="flex base">
+                     <span class="flex center"><i class="flex center bw bw-check"></i>{{item.view}}</span>
+                     <span class="flex center"><i class="flex center bw bw-time"></i>{{item.created_at}}</span>
+                  </div>
+               </div>
+            </div>
+         </a>
       </mescroll>
       <default :config="config"></default>
       <myfooter></myfooter>
@@ -72,7 +68,7 @@
                is_company:0
             },
             navList: {},   //导航栏
-            essayList: [],  //文章列表
+            essayList: [], //文章列表
             cid: 1,
 
             current: false,
@@ -137,12 +133,10 @@
       methods: {
          // 导航栏切换内容
          nav(id){
-            this.config.code = 0;
             this.$http.get(`articles?cid=${id}`).then(res => {
                this.cid = id;
                this.essayList = [];
                this.mescroll.resetUpScroll();  // 刷新列表数据
-               this.config.code = 2
             }).catch(err => {
                this.config = {
                   code: -1,
@@ -176,12 +170,11 @@
                      }
                   } else {
                      this.essayList.push(...res.data);
-                     this.current = true;
-
                      this.config.code = 2;
                      this.$nextTick(() => {
                         mescroll.endSuccess(res.data.length);
                      })
+                     this.current = true;
                   }
                }).catch((err) => {
                   mescroll.endErr()

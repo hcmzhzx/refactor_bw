@@ -13,8 +13,8 @@ module.exports = {
     proxyTable: {},
 
     // Various Dev Server settings
-    host: 'new.bw.eyooh.com', // 127.0.0.1 new.bw.eyooh.com
-    // host: '192.168.0.18', // 127.0.0.1 new.bw.eyooh.com
+    // host: 'new.bw.eyooh.com', // 127.0.0.1 new.bw.eyooh.com
+    host: '192.168.0.18', // 127.0.0.1 new.bw.eyooh.com
     port: 80, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
