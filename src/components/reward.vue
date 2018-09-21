@@ -1,5 +1,5 @@
 <template>
-   <div id="reward" class="flexv mainbox wrap">
+   <div id="reward" :class="['flexv','mainbox','wrap',{'stop':stop}]" @scroll="roll">
       <div class="flexv head">
          <div class="flexv today">
             <a href="javascript:;" class="twinkle flex endvc">如何推广?</a>
@@ -34,17 +34,17 @@
          </tab-item>
       </tab>
 
-      <mescroll v-show="current" class="flexitemv mainbox tab-container" ref="myScroller" :up="mescrollUp" @init="mescrollInit">
+      <div v-show="current" class=" tab-container" ref="myScroller">
          <div class="between bg_white item">
             <div class="flex left">
                <div class="userImg"><img src="../../static/image/zxj.jpg" class="radimg"></div>
                <div class="aroundv info">
-                  <p class="flexv name">小胡同志小胡同志小胡同志</p>
+                  <p class="flexv name">小胡同志小胡同志小胡同志小胡同志</p>
                   <span class="flex">注册：{{config.code}}</span>
                   <span class="flex">开通：{{config.code}}</span>
                </div>
             </div>
-            <div class="flex money">+0.30</div>
+            <div class="flex money">+10.30</div>
          </div>
          <div class="between bg_white item second">
             <div class="flex left">
@@ -57,7 +57,129 @@
             </div>
             <div class="flex money">+0.30</div>
          </div>
-      </mescroll>
+         <div class="between bg_white item">
+            <div class="flex left">
+               <div class="userImg"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+               <div class="aroundv info">
+                  <p class="flexv name">小胡同志小胡同志小胡同志</p>
+                  <span class="flex">注册：{{config.code}}</span>
+                  <span class="flex">开通：{{config.code}}</span>
+               </div>
+            </div>
+            <div class="flex money">+0.30</div>
+         </div>
+         <div class="between bg_white item">
+            <div class="flex left">
+               <div class="userImg"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+               <div class="aroundv info">
+                  <p class="flexv name">小胡同志小胡同志小胡同志</p>
+                  <span class="flex">注册：{{config.code}}</span>
+                  <span class="flex">开通：{{config.code}}</span>
+               </div>
+            </div>
+            <div class="flex money">+0.30</div>
+         </div>
+         <div class="between bg_white item">
+            <div class="flex left">
+               <div class="userImg"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+               <div class="aroundv info">
+                  <p class="flexv name">小胡同志小胡同志小胡同志</p>
+                  <span class="flex">注册：{{config.code}}</span>
+                  <span class="flex">开通：{{config.code}}</span>
+               </div>
+            </div>
+            <div class="flex money">+0.30</div>
+         </div>
+         <div class="between bg_white item">
+            <div class="flex left">
+               <div class="userImg"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+               <div class="aroundv info">
+                  <p class="flexv name">小胡同志小胡同志小胡同志</p>
+                  <span class="flex">注册：{{config.code}}</span>
+                  <span class="flex">开通：{{config.code}}</span>
+               </div>
+            </div>
+            <div class="flex money">+0.30</div>
+         </div>
+         <div class="between bg_white item">
+            <div class="flex left">
+               <div class="userImg"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+               <div class="aroundv info">
+                  <p class="flexv name">小胡同志小胡同志小胡同志</p>
+                  <span class="flex">注册：{{config.code}}</span>
+                  <span class="flex">开通：{{config.code}}</span>
+               </div>
+            </div>
+            <div class="flex money">+0.30</div>
+         </div>
+         <div class="between bg_white item">
+            <div class="flex left">
+               <div class="userImg"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+               <div class="aroundv info">
+                  <p class="flexv name">小胡同志小胡同志小胡同志</p>
+                  <span class="flex">注册：{{config.code}}</span>
+                  <span class="flex">开通：{{config.code}}</span>
+               </div>
+            </div>
+            <div class="flex money">+0.30</div>
+         </div>
+         <div class="between bg_white item">
+            <div class="flex left">
+               <div class="userImg"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+               <div class="aroundv info">
+                  <p class="flexv name">小胡同志小胡同志小胡同志</p>
+                  <span class="flex">注册：{{config.code}}</span>
+                  <span class="flex">开通：{{config.code}}</span>
+               </div>
+            </div>
+            <div class="flex money">+0.30</div>
+         </div>
+         <div class="between bg_white item">
+            <div class="flex left">
+               <div class="userImg"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+               <div class="aroundv info">
+                  <p class="flexv name">小胡同志小胡同志小胡同志</p>
+                  <span class="flex">注册：{{config.code}}</span>
+                  <span class="flex">开通：{{config.code}}</span>
+               </div>
+            </div>
+            <div class="flex money">+0.30</div>
+         </div>
+         <div class="between bg_white item">
+            <div class="flex left">
+               <div class="userImg"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+               <div class="aroundv info">
+                  <p class="flexv name">小胡同志小胡同志小胡同志</p>
+                  <span class="flex">注册：{{config.code}}</span>
+                  <span class="flex">开通：{{config.code}}</span>
+               </div>
+            </div>
+            <div class="flex money">+0.30</div>
+         </div>
+         <div class="between bg_white item">
+            <div class="flex left">
+               <div class="userImg"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+               <div class="aroundv info">
+                  <p class="flexv name">小胡同志小胡同志小胡同志</p>
+                  <span class="flex">注册：{{config.code}}</span>
+                  <span class="flex">开通：{{config.code}}</span>
+               </div>
+            </div>
+            <div class="flex money">+0.30</div>
+         </div>
+         <div class="between bg_white item">
+            <div class="flex left">
+               <div class="userImg"><img src="../../static/image/zxj.jpg" class="radimg"></div>
+               <div class="aroundv info">
+                  <p class="flexv name">小胡同志小胡同志小胡同志</p>
+                  <span class="flex">注册：{{config.code}}</span>
+                  <span class="flex">开通：{{config.code}}</span>
+               </div>
+            </div>
+            <div class="flex money">+0.30</div>
+         </div>
+
+      </div>
 
       <!--缺省提示页-->
       <default :config="config"></default>
@@ -67,12 +189,12 @@
 <script>
    import {Tab, TabItem} from 'vux'
    import Default from './module/default'
-   import Mescroll from 'mescroll.js/mescroll'
+
 
    export default {
       name: 'reward',
       components: {
-         Tab, TabItem, Default, Mescroll
+         Tab, TabItem, Default
       },
       data(){
          return{
@@ -85,20 +207,7 @@
                routeName: '',
                routeText: ''
             },
-
-            mescroll: null,
-            mescrollUp: {
-               callback: this.upCallback,
-               page: {
-                  num: 0,
-                  size: 10,
-               },
-               moMoreSize: 6,
-               toTop: {
-                  src: '../../static/image/totop.png',
-                  offset:1800
-               }
-            }
+            stop:false,
          }
       },
       created(){
@@ -113,20 +222,19 @@
          nav(id){
 
             this.awardList = [];
-            this.mescroll.resetUpScroll();  // 刷新列表数据
          },
-         // 初始化
-         mescrollInit (mescroll) {
-            this.mescroll = mescroll
-         },
-         //上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
-         upCallback(page, mescroll){
-            setTimeout(()=>{
-               if(this.awardList.length<6){
-                  console.log(mescroll);
-                  mescroll.endErr();
-               }
-            },1000)
+
+         // 滚动固定导航栏
+         roll(e){
+            const marginT = Number(window.getComputedStyle(e.target.querySelector('.nav')).marginTop.split('').slice(0,length-2).join(''));
+            let Stop = document.querySelector('#reward').scrollTop, Otop = e.target.querySelector('.head').offsetHeight+marginT;
+
+            if(Stop>=Otop){
+               this.stop = true
+            } else {
+               this.stop = false
+            }
+
          }
       }
    }

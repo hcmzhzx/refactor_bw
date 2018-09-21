@@ -132,7 +132,7 @@
 
             current: false,
             config: {
-               code: 0, // 0 loading, -1 错误信息
+               code: 0, // 0 loading, -1 空/服务器错
                icon: '', // 提示图片
                text: '',
                routeName: '',

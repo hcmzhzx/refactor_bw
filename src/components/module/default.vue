@@ -43,7 +43,9 @@
          }
       },
       created(){
-         //console.log(this.config);
+         /*setTimeout(()=>{
+            console.log(this.config);
+         },10000);*/
       },
       methods:{
          // 取消

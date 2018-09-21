@@ -13,6 +13,8 @@ import read from '@/components/read'
 import visitorArticle from '@/components/visitor_article'
 import share from '@/components/share'
 import reward from '@/components/reward'
+import withdraw from '@/components/withdraw'
+import log from '@/components/log'
 
 
 
@@ -98,8 +100,18 @@ export default new Router({
          component: reward,
          meta:{title:'推广佣金',keepAlive:false}
       },
-
-
+      {
+         path: '/withdraw',
+         name: 'withdraw',
+         component: withdraw,
+         meta:{title:'红包提现',keepAlive:false}
+      },
+      {
+         path: '/log',
+         name: 'log',
+         component: log,
+         meta:{title:'提现记录',keepAlive:false}
+      },
 
 
 

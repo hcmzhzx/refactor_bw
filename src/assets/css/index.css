@@ -1,5 +1,5 @@
-html,body{font-size:calc(100vw/37.5);height:100%;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;font-family: "Roboto", "Open Sans", "PingFang", "PingFang SC", "PingFang HK", "PingFang TC", "Microsoft YaHei", "Microsoft JhengHei", "Helvetica Neue",'\5FAE\8F6F\96C5\9ED1',Arial,'\9ED1\4F53','\5B8B\4F53', sans-serif;}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-touch-callout:none;-webkit-text-size-adjust:100% !important;}
+html,body{font-size:calc(100vw/37.5);height:100%;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100% !important;font-family: "Roboto", "Open Sans", "PingFang", "PingFang SC", "PingFang HK", "PingFang TC", "Microsoft YaHei", "Microsoft JhengHei", "Helvetica Neue",'\5FAE\8F6F\96C5\9ED1',Arial,'\9ED1\4F53','\5B8B\4F53', sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-touch-callout:none;}
 html,body,div,ul,ol,li,dl,dt,dd,form,input,textarea,table,h1,h2,h3,h4,p,span,a,em,i,img{font-style:normal;}
 iframe,a,img{border:none;}
 video{object-fit:fill}
@@ -9,7 +9,7 @@ ul li, ol li{list-style:none;}
 h1,h2,h3{font-weight:normal;}
 table{border-collapse:collapse;}
 button,input,select,textarea{font:inherit;outline:0;border:0;border-radius:0;-webkit-tap-highlight-color:transparent;appearance:none;-webkit-appearance:none;background:0 0;line-height:normal;-webkit-writing-mode:horizontal-tb;resize:none;color:inherit;white-space:pre-wrap;word-wrap:break-word;-webkit-rtl-ordering:logical;user-select:text}
-input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button{-webkit-appearance:none!important;}  /*移除表单默认样式*/
+input::-webkit-inner-spin-button,input::-webkit-outer-spin-button,input::-webkit-search-cancel-button{-webkit-appearance:none !important;}  /*移除表单默认样式*/
 input[type=file]{position:absolute;top:0;left:0;bottom:0;right:0;opacity:0;width:100%;height:100%;}
 .twinkle{-webkit-tap-highlight-color:transparent;}  /*ios下点击闪现灰色半透明背景*/
 /**************************************************/
@@ -57,7 +57,7 @@ html,body{background:#f2f2f2;}
 .line{width:1px;background:#eee;}
 .vux-tab-container,.vux-tab{height:inherit !important;}
 .vux-tab .vux-tab-item{display:-webkit-box !important;line-height:inherit !important;font-size:inherit !important}
-.weui-toast{width:11rem !important;margin:0 !important;/*top:50% !important;transform:translate(-50%,-50%);*/}
+.weui-toast{width:14rem !important;margin:0 !important;/*top:50% !important;transform:translate(-50%,-50%);*/}
 .xs-plugin-pullup-container{line-height:40px;font-size:1.6rem;}
 .mescroll-totop{bottom:100px;}
 
@@ -307,8 +307,10 @@ html,body{background:#f2f2f2;}
 #reward .head .past{padding:.6rem 0;font-size:1.6rem;}
 #reward .head .past .num{font-size:2rem;}
 #reward .head .past i.line{height:3rem}
-#reward .nav{margin-top:1rem;padding:0;height:4.8rem;font-size:1.5rem;}
+#reward .nav{margin-top:1rem;padding:0;width:100%;height:4.8rem;font-size:1.5rem;}
 #reward .nav .list .num{font-size:1.8rem;}
+#reward.stop .nav{position:fixed;top:-1rem;left:0;z-index:1}
+#reward.stop .tab-container{margin-top:6rem}
 #reward .tab-container .item{position:relative;padding:1rem 2rem;border-bottom:1px solid #eee;}
 #reward .tab-container .item:last-child{border-bottom:none;}
 #reward .tab-container .item .userImg{width:4rem;height:4rem;border-radius:50%;background:#eee;}
@@ -317,5 +319,43 @@ html,body{background:#f2f2f2;}
 #reward .tab-container .item .info span{font-size:1.4rem;color:#bbb;}
 #reward .tab-container .item .money{font-size:2.4rem;color:#d40418;}
 #reward .tab-container .item.second:before{content:'2';width:2rem;height:2rem;text-align:center;line-height:2rem;position:absolute;top:0;left:0;background:#fc0806;font-size:1.4rem;color:#fff;}
+/*********************** 推广佣金 *************************/
+#withdraw .bg_white{padding:1rem;}
+#withdraw .top .left{font-size:1.8rem;}
+#withdraw .top .left i.bw{margin-right:.5rem;color:#c84b5b}
+#withdraw .top i.bw{font-size:3rem;}
+#withdraw .middle{border-top:1px solid #eee;border-bottom:1px solid #eee;}
+#withdraw .middle{height:10rem;}
+#withdraw .middle i.yen{font-size:4rem;color:#27a2dc;}
+#withdraw .middle input.money{width:20rem;text-indent:.4rem;line-height:normal;font-size:4rem;color:#27a2dc;}
+#withdraw .middle input::-webkit-input-placeholder{font-size:2rem;}
+#withdraw .middle .max{width:4rem;font-size:1.6rem;}
+#withdraw .middle i.bw-del{padding:0 1rem;font-size:2rem;color:#ddd;}
+#withdraw .footer{font-size:1.6rem;}
+#withdraw .footer.deficiency{color:#f00;}
+#withdraw .submitbox{margin:4rem 1rem 0;}
+#withdraw .submitbox .hint{margin:.4rem 0;font-size:1.5rem;color:#bbb;}
+#withdraw .submitbox .submit{width:100%;height:4.6rem;border-radius:1rem;background:#29a7e1;font-size:2rem;color:#fff;}
+#withdraw .submitbox .submit.deficiency{opacity:.6}
+/*********************** 提现记录 *************************/
+#log .list{margin-bottom:1rem;}
+#log .list .account{margin:0 1rem;padding:1rem 0;font-size:1.8rem;}
+#log .list .account i.bw{margin-right:1rem;font-size:4rem;}
+#log .list .account i.bw-wx{color:#04be02;}
+#log .list .account i.bw-zfb{color:#03a9f4;}
+#log .list .money{padding:1rem 0;border-bottom:1px dashed #ddd;}
+#log .list .money .num{font-size:4rem;}
+#log .list .money em{font-size:1.8rem;}
+#log .list .time{padding:1rem;font-size:1.8rem;}
+#log .list .time>div{padding:.2rem 0;color:#bbb;}
+#log .list .time em{padding-top:.4rem;color:#333;}
+
+
+
+
+
+
+
+
 
 
