@@ -15,7 +15,7 @@ const mutations = { //改变属性 使用(commit)
 };
 
 const actions = { //应用 mutation 使用(dispath)
-   company_listing({commit,state}){
+   company_listing({commit,state}){  // 公司数据
       if(state.listing.length) return Promise.resolve(state.listing);
       return axios.get('companies').then(res=>{
          commit('company_state',res.data);

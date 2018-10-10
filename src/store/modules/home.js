@@ -19,7 +19,7 @@ const mutations = { //改变属性 使用(commit)
 };
 
 const actions = { //应用 mutation 使用(dispath)
-   nav_listing({commit,state}){
+   nav_listing({commit,state}){  // 首页文章导航列表
       if(state.navList.length) return Promise.resolve(state.navList);
       return axios.get('categories').then(res=>{
          commit('nav_state',{navList:res.data});

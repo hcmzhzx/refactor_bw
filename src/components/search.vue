@@ -23,7 +23,7 @@
          <div class="flexitemv content box2">
             <div class="flexv item">
                <a href="javascript:;" class="flex bg_white list" v-for="item in historydata" :key="item.id" @click="log(item.id)">
-                  <div class="flexv lists" v-if="item.covers">
+                  <div class="flexv lists" v-if="item.covers.length==3">
                      <div class="flexitemv cont">
                         <h2 class="flexitemv">{{item.title}}</h2>
                      </div>
@@ -76,10 +76,10 @@
                   num:0,
                   size:10,
                },
-               moMoreSize:6,
+               noMoreSize: 6,
                toTop:{
                   src:'../../static/image/totop.png',
-                  offset:1800,
+                  offset:2000,
                }
             }
          }
@@ -99,7 +99,7 @@
             let val = this.searchTitle = this.$refs.focus.value.trim();
             if (val != '') {
                this.$http.get(`articles?title=${val}`).then(res=>{
-                  this.historydata = res.data.data
+                  this.historydata = res.data
                })
             }
          },100),
@@ -140,7 +140,6 @@
             }
             localStorage.setItem('record', recordArr);
             this.record = localStorage.getItem('record').split(',');
-
          },
 
          // 分页
@@ -151,12 +150,12 @@
          upCallback(page, mescroll){
             this.$http.get(`articles?title=${this.searchTitle}&page=${page.num}`).then(res => {
                if(page.num == 1){ this.historydata = [] }
-               this.historydata.push(...res.data.data);
+               this.historydata.push(...res.data);
                this.$nextTick(() => {
-                  mescroll.endSuccess(res.data.data.length);
+                  mescroll.endSuccess(res.data.length);
                })
             }).catch((e)=>{
-               mescroll.endErr()
+               mescroll.endErr();
             })
          }
       }

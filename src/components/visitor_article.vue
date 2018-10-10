@@ -11,16 +11,16 @@
             </a>
          </div>
          <tab active-color="#3ba1d3" custom-bar-width="5rem" class="nav">
-            <tab-item selected @on-item-click="" class="list">
+            <tab-item selected @on-item-click="" class="flex center list">
                <span class="flex center txt">全部</span>
             </tab-item>
-            <tab-item @on-item-click="" class="list">
+            <tab-item @on-item-click="" class="flex center list">
                <span class="flex center txt">微信好友</span>
             </tab-item>
-            <tab-item @on-item-click="" class="list">
+            <tab-item @on-item-click="" class="flex center list">
                <span class="flex center txt">微信群聊</span>
             </tab-item>
-            <tab-item @on-item-click="" class="list">
+            <tab-item @on-item-click="" class="flex center list">
                <span class="flex center txt">朋友圈</span>
             </tab-item>
          </tab>

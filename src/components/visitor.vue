@@ -1,16 +1,16 @@
 <template>
    <div id="visitor" class="flexv wrap">
       <tab active-color="#3ba1d3" custom-bar-width="6rem" class="nav">
-         <tab-item selected @on-item-click="nav()" class="list">
+         <tab-item selected @on-item-click="nav()" class="flex center list">
             <span class="flex center txt">全部</span>
          </tab-item>
-         <tab-item @on-item-click="nav()" class="list">
+         <tab-item @on-item-click="nav()" class="flex center list">
             <span class="flex center txt">微信好友</span>
          </tab-item>
-         <tab-item @on-item-click="nav()" class="list">
+         <tab-item @on-item-click="nav()" class="flex center list">
             <span class="flex center txt">微信群聊</span>
          </tab-item>
-         <tab-item @on-item-click="nav()" class="list">
+         <tab-item @on-item-click="nav()" class="flex center list">
             <span class="flex center txt">朋友圈</span>
          </tab-item>
       </tab>
@@ -104,7 +104,6 @@
    import {Tab, TabItem, LoadMore} from 'vux'
    import Default from './module/default'
    import Mescroll from 'mescroll.js/mescroll'
-
 
    export default {
       name: 'visitor',

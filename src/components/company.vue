@@ -1,12 +1,12 @@
 <template>
    <div id="company" class="flexv mainbox wrap">
       <!--头部-->
-      <div class="aroundh bg_white head">
-         <a href="javascript:;" class="flex centert list current"><span class="flex center">直销行业</span></a>
-         <a href="javascript:;" class="flex centert list"><span class="flex center">保险行业</span></a>
-         <a href="javascript:;" class="flex centert list"><span class="flex center">其他行业</span></a>
-      </div>
-      <!--搜索 focus-->
+      <tab active-color="#fe4d0d" custom-bar-width="6rem" class="bg_white head">
+         <tab-item selected class="flex center list"><span class="flex center">直销行业</span></tab-item>
+         <tab-item class="flex center list"><span class="flex center">保险行业</span></tab-item>
+         <tab-item class="flex center list"><span class="flex center">其他行业</span></tab-item>
+      </tab>
+      <!--搜索-->
       <div class="flex search">
          <input type="text" class="flexitem bg_white" @input="search" @focus="point=true" :class="[point?'focus':'blur']" ref="find" placeholder="搜索">
          <span class="flex center cancel" @click="point=false" v-if="point">取消</span>
@@ -43,7 +43,7 @@
       </div>
       <div class="flexv indexlist-wrapper" v-if='!point'>
          <ul class="indexlist-content">
-            <li :id="item" class="indexsection" v-for="(item,index) in PYarr" :key="index">
+            <li v-for="(item,index) in PYarr" :key="index" :id="item" class="indexsection">
                <p class="first">{{PYarr[index]}}</p>
                <div class="between list" v-for="val in brands" :key="val.id" @click="ok(val.id)" v-if="val.pinyin.substring(0,1).toUpperCase() == PYarr[index]">
                   <div class="flexitem left">
@@ -103,7 +103,7 @@
             <button type="submit" class="flex center submit">提交审核</button>
          </form>
       </div>
-      <default :config="config"></default>
+      <default :config="config" v-show="!current"></default>
       <!--提示框-->
       <toast v-model="toast.show" width="12rem" :type="toast.type">{{toast.text}}</toast>
    </div>
@@ -112,13 +112,13 @@
 <script>
    import {_debounce} from '../assets/js/functions'
    import Default from './module/default'
-   import {Toast} from 'vux'
+   import {Tab, TabItem, Toast} from 'vux'
    import {CheckForm} from '../assets/js/checkForm'
 
    export default {
       name: 'company',
       components: {
-         Default, Toast
+         Default, Tab, TabItem, Toast
       },
       data(){
          return {
@@ -157,12 +157,13 @@
             this.config.code = 2;
             this.current = true;
          }).catch(err => {
+            this.current = false;
             this.config = {
                code: -1,
                icon: '../../static/image/server_err.png',
                text: '服务器崩溃啦',
-               routeName: 'index',
-               routeText: '返回首页'
+               routeName: '/',
+               routeText: '刷新一下试试'
             }
          })
 
@@ -188,7 +189,7 @@
          ok(id){
             this.$store.commit('updata_state', {company: id});
             this.$http.patch('user', {company_id: id}).then(res => {
-               this.$router.go(-1);
+               this.$router.go(-1);  // 需要修改
             })
          },
 

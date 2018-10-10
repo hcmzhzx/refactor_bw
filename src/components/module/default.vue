@@ -6,7 +6,7 @@
       <div v-if="config.code==-1" class="flexitemv center undata">
          <div class="icon"><img :src="config.icon" class="fitimg"></div>
          <p class="text">{{config.text}}</p>
-         <a href="javascript:;" v-if="config.routeName" @click="$router.push({name:`${config.routeName}`})" class="flex center btn">{{config.routeText}}</a>
+         <a href="javascript:;" v-if="config.routeName" @click="routerList(config.routeName)" class="flex center btn">{{config.routeText}}</a>
       </div>
       <!--弹框提示-->
       <div id="alert" v-show="config.code==1" :class="[config.code==1?'show':'']">
@@ -48,6 +48,15 @@
          },10000);*/
       },
       methods:{
+         // 缺省页按钮
+         routerList(name){
+            if(name=='/'){
+               this.$router.go(0)  // 刷新当前页面
+            } else {
+               this.$router.push({name:name}) // 跳转到指定路由
+            }
+         },
+
          // 取消
          cancel(){
             this.config.code = 2

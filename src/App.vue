@@ -1,5 +1,5 @@
 <template>
-   <div id="app" class="wrap mainbox">
+   <div id="app" class="flexv wrap">
       <keep-alive>
          <router-view v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>

@@ -9,12 +9,17 @@ import account from '@/components/account'
 import visitor from '@/components/visitor'
 import user from '@/components/user'
 import articles from '@/components/articles'
+import detail from '@/components/detail'
+import details from '@/components/details'
+
 import read from '@/components/read'
 import visitorArticle from '@/components/visitor_article'
 import share from '@/components/share'
 import reward from '@/components/reward'
 import withdraw from '@/components/withdraw'
 import log from '@/components/log'
+
+import contact from '@/components/contact'
 
 
 
@@ -44,7 +49,7 @@ export default new Router({
          path: '/userInfo',
          name: 'userInfo',
          component: userInfo,
-         meta:{title:'基本信息',keepAlive:false}
+         meta:{title:'基本信息',keepAlive:true}
       },
       {
          path: '/company',
@@ -75,6 +80,18 @@ export default new Router({
          name: 'articles',
          component: articles,
          meta:{title:'我的文章',keepAlive:false}
+      },
+      {
+         path: '/detail',
+         name: 'detail',
+         component: detail,
+         meta:{title:'',keepAlive:false}
+      },
+      {
+         path: '/details',
+         name: 'details',
+         component: details,
+         meta:{title:'',keepAlive:false}
       },
       {
          path: '/read',
@@ -113,7 +130,12 @@ export default new Router({
          meta:{title:'提现记录',keepAlive:false}
       },
 
-
+      {
+         path: '/contact',
+         name: 'contact',
+         component: contact,
+         meta:{title:'在线咨询',keepAlive:false}
+      },
 
 
 

@@ -21,16 +21,6 @@
          </div>
       </div>
       <div class="flexv bg_white">
-         <div class="between list">
-            <span class="flex center left">手机</span>
-            <input type="tel" name="phone" v-model="userInfo.phone" maxlength="11" class="flexitem right phone" placeholder="您的手机号" data-rule="m" data-errmsg="请正确填写手机号" data-sync="true">
-         </div>
-         <div class="between list">
-            <span class="flex center left">微信</span>
-            <input type="text" name="wechat" v-model="userInfo.wechat" class="flexitem right wechat" placeholder="您的微信号码" data-rule="*" data-errmsg="请填写微信号" data-sync="true">
-         </div>
-      </div>
-      <div class="flexv bg_white">
          <div class="between list" @click="$router.push({name:'company'})">
             <span class="flex center left">所属公司</span>
             <div class="flexitem endh right company"><span>{{companyText}}</span><i class="flex center bw bw-right"></i></div>
@@ -47,6 +37,16 @@
             <div class="flexitem endh right account"><span>{{ali_account}}</span><i class="flex center bw bw-right"></i></div>
             <input type="hidden" name="ali_account" v-model="userInfo.ali_account" data-rule="*" data-errmsg="请选择账号" data-sync="true">
             <input type="hidden" name="ali_name" v-model="userInfo.ali_name">
+         </div>
+      </div>
+      <div class="flexv bg_white">
+         <div class="between list">
+            <span class="flex center left">手机</span>
+            <input type="tel" name="phone" v-model="userInfo.phone" maxlength="11" class="flexitem right phone" placeholder="您的手机号" data-rule="m" data-errmsg="请正确填写手机号" data-sync="true">
+         </div>
+         <div class="between list">
+            <span class="flex center left">微信</span>
+            <input type="text" name="wechat" v-model="userInfo.wechat" class="flexitem right wechat" placeholder="您的微信号码" data-rule="*" data-errmsg="请填写微信号" data-sync="true">
          </div>
       </div>
       <button type="submit" class="flex center submit">保存修改</button>
@@ -89,7 +89,25 @@
             imgUrl: ''
          }
       },
-      created(){
+      beforeRouteEnter(to, from, next){
+         next(vm=>{
+            // 获取用户信息
+            vm.$store.dispatch('user_listing').then(user => {
+               vm.userInfo = {...user};
+
+               if(user.wechat_qrcode) {vm.wechat_qrcode = '已完善'}
+               if(user.ali_account) {vm.ali_account = '已完善'}
+
+               // 获取公司信息
+               vm.$store.dispatch('company_listing').then(company=>{
+                  vm.companyText = company.find((item)=>{
+                     return item.id == user.company
+                  }).name;
+               })
+            })
+         })
+      },
+      /*created(){
          // 获取用户信息
          this.$store.dispatch('user_listing').then(user => {
             this.userInfo = {...user};
@@ -99,12 +117,12 @@
 
             // 获取公司信息
             this.$store.dispatch('company_listing').then(company=>{
-               this.companyText = company.filter((item)=>{
+               this.companyText = company.find((item)=>{
                   return item.id == user.company
-               })[0].name;
+               }).name;
             });
          });
-      },
+      },*/
       methods: {
          // 用户头像
          avatar(){ //获取到file里图片地址传给子组件

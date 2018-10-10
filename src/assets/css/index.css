@@ -27,10 +27,10 @@ input[type=file]{position:absolute;top:0;left:0;bottom:0;right:0;opacity:0;width
 .end{-webkit-box-align:end;-webkit-box-pack:end;}
 .between{display:flex;justify-content:space-between;align-items: center;} /*水平两端对齐*/
 .aroundh{display:flex;justify-content:space-around;align-items:center;}  /*水平等间距*/
+.aroundv{display:flex;flex-direction:column;justify-content:space-around;} /*垂直等间距*/
 .cross{display:flex;flex-direction:column;justify-content:space-between;}  /*垂直对齐两端*/
 .crossc{display:flex;flex-direction:column;justify-content:space-between;align-items:center;}  /*垂直对齐两端居中*/
 .cross-end{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;}  /*垂直对齐两端靠右*/
-.aroundv{display:flex;flex-direction:column;justify-content:space-around;} /*垂直等间距*/
 .br{display:flex;flex-wrap:wrap;}  /*换行*/
 .unbr{display:flex;flex-wrap:nowrap} /*不换行*/
 .wrap{height:100%;}
@@ -84,9 +84,7 @@ html,body{background:#f2f2f2;}
 #myFooter a.tab i.bw{font-size:3rem;}
 #myFooter a.current{color:#3fa0cc;}
 /************************* 公司 ****************************/
-#company .head .list{padding:0 .6rem;font-size:1.8rem;}
-#company .head .list span{height:5rem;border-bottom:2px solid transparent;}
-#company .head .list.current span{border-bottom-color:#fe4d0d;color:#fe4d0d;}
+#company .head{padding:0;height:5rem;font-size:1.8rem;}
 #company .search{margin:1rem;}
 #company .search input{height:4rem;border-radius:.6rem;font-size:1.6rem;padding:0 .6rem;}
 #company .search input.blur{text-align:center;}
@@ -101,6 +99,7 @@ html,body{background:#f2f2f2;}
 #company .indexlist-wrapper .indexsection .list{border-bottom:none;}
 #company .indexlist-wrapper .list .text>*{max-width:23.6rem;-webkit-line-clamp:1;overflow:hidden;}
 #company .indexlist-wrapper .list .logoImg{width:4rem;height:4rem;margin-right:1rem;}
+#company .indexlist-wrapper .list .logoImg>img{object-fit:contain;}
 #company .indexlist-wrapper .list .name,#company .indexlist-wrapper .list .state{font-size:1.8rem;}
 #company .indexlist-wrapper .list .deputy{font-size:1.6rem;color:#bbb;}
 #company .indexlist-wrapper .list i.bw-right{font-size:2.4rem;}
@@ -125,15 +124,15 @@ html,body{background:#f2f2f2;}
 #index .header .search .submit{padding:0 1rem;color:#c13141;}
 #index .header .nav{overflow-x:auto;white-space:nowrap;padding:0;height:4rem;}
 #index .header .nav .list{padding:0 1rem;}
-#index .header .nav .list span{border-bottom:2px solid transparent;font-size:1.6rem;}
+#index .header .nav .list span{height:inherit;border-bottom:2px solid transparent;font-size:1.6rem;}
 #index .header .nav .list.vux-tab-selected span{border-bottom-color:#3fa0cc;color:#3fa0cc;}
 #index .tab-container{border-top:1px solid #eee;}
 #index .tab-container .mint-tab-container-wrap{display:-webkit-box;-webkit-box-flex:1;-ms-flex:1;flex:1;-webkit-box-orient:vertical;}
 .tab-container a.list{padding:10px;border-bottom: 1px solid #f2f2f2;}
 .tab-container a.list:last-child{border-bottom:none;}
-.tab-container .lists .imgbox{margin:.5rem 0;}
+.tab-container .lists>.imgbox{margin:.5rem 0;}
 .tab-container .lists .img{width:33%;height:7rem;}
-.tab-container .lists .cont{padding-left:1rem;}
+.tab-container .lists>.img{margin-left:1rem;}
 .tab-container .lists .cont h2{font-weight:normal;height:5rem;line-height:2.5rem;font-size:1.6rem;overflow:hidden;-webkit-line-clamp:2;}
 .tab-container .lists .base{padding:0.2rem 0;color:#969696;font-size:1.5rem;}
 .tab-container .lists .base span{margin-right:1rem;}
@@ -179,6 +178,7 @@ html,body{background:#f2f2f2;}
 #userInfo .submit{width:14rem;height:4rem;border-radius:1.2rem;margin:2rem auto;background:#3fa0cc;color:#fff;}
 /*********************** 账户管理 *************************/
 #account,#account .nav .vux-tab-item{font-size:1.8rem;}
+#account .nav{padding:0;height:4rem;}
 #account .vux-slider .vux-swiper{width:100%;height:auto!important;}
 #account .vux-slider .wechat .premise{margin-top:2rem;font-size:1.5rem;color:#999;}
 #account .vux-slider .wechat .tab-swiper{margin:2rem 4rem;}
@@ -194,7 +194,8 @@ html,body{background:#f2f2f2;}
 #account .vux-slider .zhifubao .tab-swiper .submit{margin:2rem 1rem;width:94%;height:4rem;border-radius:.4rem;background:#2277ee;color:#fff;}
 /*********************** 访客记录 *************************/
 #visitor .weui-loadmore{margin:3rem auto 0;}
-#visitor,#visitor .nav .list{font-size:1.8rem;}
+#visitor,#visitor .nav{font-size:1.8rem;}
+#visitor .nav{padding:0;height:4rem;}
 #visitor .tab-container .lists{position:relative;padding:0 1.4rem;margin-top:1rem;overflow:hidden;}
 #visitor .tab-container .lists.new:before{content:'';background:red;width:4rem;height:8rem;position:absolute;top:-35px;left:-14px;transform:rotate(45deg);}
 #visitor .tab-container .lists.new:after{content:"\65B0";position:absolute;top:0;left:2px;font-size:1.5rem;color:#fff;}
@@ -251,6 +252,7 @@ html,body{background:#f2f2f2;}
 #user .analyzeImg .img9:before{top:50%;left:150%;height:170%;transform:rotate(130deg) translateZ(0);}
 /*********************** 我的文章 *************************/
 #articles,#articles .nav .list{font-size:1.8rem;}
+#articles .nav .list{height:4rem;}
 #articles i.line{height:2rem;}
 #articles .tab-container .lists{margin-top:1rem;}
 #articles .tab-container .visitor{padding:1rem;border-top:1px solid #eee;border-bottom:1px solid #eee;font-size:1.5rem;}
@@ -270,7 +272,7 @@ html,body{background:#f2f2f2;}
 #read .head .analysis{font-size:1.6rem;}
 #read .head .analysis i.bw{font-size:2.6rem;}
 #read .tab-container{margin-top:1rem;}
-#read .tab-container .nav .list{font-size:1.8rem;}
+#read .tab-container .nav{padding:0;height:4rem;font-size:1.8rem;}
 #read .tab-container .lists .list{border-bottom:none}
 #read .tab-container .lists .record_time{margin:0 1rem;border-top:1px solid #eee;border-bottom:1px solid #eee;color:#999;align-items:right;}
 #read .tab-container .lists .record_time i.line{height:3rem;}
@@ -283,7 +285,7 @@ html,body{background:#f2f2f2;}
 #read .tab-container .lists .unfold{padding:1rem 0;font-size:1.6rem;}
 /*********************** 文章访客 *************************/
 #visitor_article .lists{margin-bottom:1rem;}
-#visitor_article .nav .list{font-size:1.8rem;}
+#visitor_article .nav{padding:0;height:4rem;font-size:1.8rem;}
 #visitor_article .content .list{margin-bottom:1rem;padding:0 1rem;}
 #visitor_article .content .list .friend{padding:1rem 0;}
 #visitor_article .content .list .friend .cover{width:4rem;height:4rem;margin-right:1rem;}
@@ -304,13 +306,12 @@ html,body{background:#f2f2f2;}
 #reward .head .today .twinkle{font-size:1.6rem;}
 #reward .head .today h2.number{font-size:5rem;}
 #reward .head .today .txt{font-size:1.6rem;}
-#reward .head .past{padding:.6rem 0;font-size:1.6rem;}
+#reward .head .past{margin-bottom:1rem;padding:.6rem 0;font-size:1.6rem;}
 #reward .head .past .num{font-size:2rem;}
 #reward .head .past i.line{height:3rem}
-#reward .nav{margin-top:1rem;padding:0;width:100%;height:4.8rem;font-size:1.5rem;}
+#reward .sticky{height:5rem;}
+#reward .nav{padding:0;width:100%;height:5rem;font-size:1.5rem;}
 #reward .nav .list .num{font-size:1.8rem;}
-#reward.stop .nav{position:fixed;top:-1rem;left:0;z-index:1}
-#reward.stop .tab-container{margin-top:6rem}
 #reward .tab-container .item{position:relative;padding:1rem 2rem;border-bottom:1px solid #eee;}
 #reward .tab-container .item:last-child{border-bottom:none;}
 #reward .tab-container .item .userImg{width:4rem;height:4rem;border-radius:50%;background:#eee;}
@@ -319,7 +320,7 @@ html,body{background:#f2f2f2;}
 #reward .tab-container .item .info span{font-size:1.4rem;color:#bbb;}
 #reward .tab-container .item .money{font-size:2.4rem;color:#d40418;}
 #reward .tab-container .item.second:before{content:'2';width:2rem;height:2rem;text-align:center;line-height:2rem;position:absolute;top:0;left:0;background:#fc0806;font-size:1.4rem;color:#fff;}
-/*********************** 推广佣金 *************************/
+/*********************** 红包提现 *************************/
 #withdraw .bg_white{padding:1rem;}
 #withdraw .top .left{font-size:1.8rem;}
 #withdraw .top .left i.bw{margin-right:.5rem;color:#c84b5b}
@@ -337,6 +338,12 @@ html,body{background:#f2f2f2;}
 #withdraw .submitbox .hint{margin:.4rem 0;font-size:1.5rem;color:#bbb;}
 #withdraw .submitbox .submit{width:100%;height:4.6rem;border-radius:1rem;background:#29a7e1;font-size:2rem;color:#fff;}
 #withdraw .submitbox .submit.deficiency{opacity:.6}
+#withdraw .popup{position:fixed;top:0;left:0;bottom:0;right:0;background:rgba(0,0,0,.5);opacity:0;transition: opacity .4s;z-index:-1;}
+#withdraw .popup.show{opacity:1;}
+#withdraw .popup .content{position:fixed;bottom:0;left:0;width:100%;background:#eee;z-index:101;font-size:1.6rem;color:#999;transform:translateY(100%);transition:transform .3s linear;}
+#withdraw .popup.show .content{transform:translateY(0);}
+#withdraw .popup .content .item{border-bottom:1px solid #ddd;}
+#withdraw .popup .content .cancel{margin-top:1rem;border-top:1px solid #ddd;}
 /*********************** 提现记录 *************************/
 #log .list{margin-bottom:1rem;}
 #log .list .account{margin:0 1rem;padding:1rem 0;font-size:1.8rem;}
@@ -348,7 +355,7 @@ html,body{background:#f2f2f2;}
 #log .list .money em{font-size:1.8rem;}
 #log .list .time{padding:1rem;font-size:1.8rem;}
 #log .list .time>div{padding:.2rem 0;color:#bbb;}
-#log .list .time em{padding-top:.4rem;color:#333;}
+#log .list .time em{color:#333;}
 
 
 

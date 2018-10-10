@@ -11,14 +11,13 @@
          </div>
 
          <tab active-color="#3fa0cc" class="nav">
-            <tab-item v-for="(item,index) in navList" :key="item.id" @on-item-click="nav(item.id)" :selected="index==0" class="list">
+            <tab-item v-for="(item,index) in navList" :key="item.id" @on-item-click="nav(item.id)" :selected="index==0" class="flex center list">
                <span class="flex center txt">{{item.name}}</span>
             </tab-item>
          </tab>
       </div>
-
       <mescroll v-show="current" class="flexitemv mainbox tab-container" ref="myScroller" :up="mescrollUp" @init="mescrollInit" :class="[essayList.length ? '':'none']">
-         <a href="javascript:;" class="flex bg_white list" v-for="item in essayList" :key="item.id">
+         <a href="javascript:;" class="flex bg_white list" v-for="item in essayList" :key="item.id" @click="$router.push({name:'detail',query:{id:item.id}})">
             <div class="flexv lists" v-if="item.covers.length==3">
                <div class="flexitemv cont">
                   <h2 class="flexitemv">{{item.title}}</h2>
@@ -45,7 +44,7 @@
             </div>
          </a>
       </mescroll>
-      <default :config="config"></default>
+      <default :config="config" v-show="!current"></default>
       <myfooter></myfooter>
    </div>
 </template>
@@ -113,7 +112,7 @@
                code: -1,
                icon: '../../static/image/server_err.png',
                text: '服务器崩溃啦',
-               routeName: 'index',
+               routeName: '/',
                routeText: '刷新一下试试'
             }
          })
@@ -125,9 +124,24 @@
                code: -1,
                icon: '../../static/image/server_err.png',
                text: '服务器崩溃啦',
-               routeName: 'index',
+               routeName: '/',
                routeText: '刷新一下试试'
             }
+         })
+      },
+      // 还原导航位置
+      beforeRouteEnter(to, from, next){
+         next(vm=>{
+            vm.$nextTick(()=>{
+               if(vm.$('.vux-tab-selected')){
+                  let L = vm.$('.vux-tab-selected').offsetLeft, W = vm.$('.vux-tab-selected').clientWidth, C = L+W/2;
+                  if(C>vm.$('.scrollable').clientWidth/2){
+                     vm.$('.scrollable').scrollLeft = C - vm.$('.scrollable').clientWidth/2;
+                  } else {
+                     vm.$('.scrollable').scrollLeft = 0;
+                  }
+               }
+            })
          })
       },
       methods: {
@@ -142,7 +156,7 @@
                   code: -1,
                   icon: '../../static/image/server_err.png',
                   text: '服务器崩溃啦',
-                  routeName: 'index',
+                  routeName: '/',
                   routeText: '刷新一下试试'
                }
             })
@@ -170,10 +184,11 @@
                      }
                   } else {
                      this.essayList.push(...res.data);
-                     this.config.code = 2;
                      this.$nextTick(() => {
                         mescroll.endSuccess(res.data.length);
-                     })
+                     });
+
+                     this.config.code = 2;
                      this.current = true;
                   }
                }).catch((err) => {
@@ -181,8 +196,8 @@
                   this.config = {
                      code: -1,
                      icon: '../../static/image/server_err.png',
-                     text: '服务器崩溃啦1',
-                     routeName: 'index',
+                     text: '服务器崩溃啦',
+                     routeName: '/',
                      routeText: '刷新一下试试'
                   }
                })
